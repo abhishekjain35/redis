@@ -9,7 +9,10 @@ def main():
     
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
     connection, _ = server_socket.accept() # wait for client
-    connection.sendall(b"+PONG\r\n")
+
+    while True:
+        connection.recv(1024)  # receive data from client
+        connection.sendall(b"+PONG\r\n")
 
 
 if __name__ == "__main__":
